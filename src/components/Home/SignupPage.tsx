@@ -4,7 +4,6 @@ const SignupPage = () => {
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100">
       <div className="bg-white shadow-lg h-full w-full md:w-[70%] flex flex-col md:flex-row">
-        {/* Image for large screens */}
         <div className="hidden md:flex md:w-1/2 items-center justify-center">
           <img
             src="/welcome.jpg"
@@ -13,9 +12,7 @@ const SignupPage = () => {
           />
         </div>
 
-        {/* Form Section */}
         <div className="w-full md:w-1/2 px-8 py-8 md:py-0 flex flex-col justify-center">
-          {/* Title */}
           <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">
             Create an Account
           </h2>
@@ -23,7 +20,6 @@ const SignupPage = () => {
             Sign up to get started.
           </p>
 
-          {/* Form */}
           <form className="space-y-6 w-full">
             <div>
               <label className="block text-gray-700 font-medium" htmlFor="firstName">

@@ -17,7 +17,7 @@ const NavBar: React.FC = () => {
             <img
               src="/logo.png"
               alt="Craftopia Logo"
-              className="h-10 w-10 mr-2"
+              className=" w-10 mr-2"
             />
             <h1 className="text-3xl font-bold text-gray-800">Craftopia</h1>
           </div>
@@ -47,6 +47,11 @@ const NavBar: React.FC = () => {
               className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
               to="/login">
               Login
+            </Link>
+            <Link
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              to="/admin">
+              Admin
             </Link>
           </div>
           {/* Mobile Menu Icon */}
