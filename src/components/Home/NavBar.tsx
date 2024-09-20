@@ -43,6 +43,11 @@ const NavBar: React.FC = () => {
               to="/contact">
               Contact
             </Link>
+            <Link
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              to="/login">
+              Login
+            </Link>
           </div>
           {/* Mobile Menu Icon */}
           <div className="md:hidden flex items-center">
@@ -78,6 +83,11 @@ const NavBar: React.FC = () => {
               className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
               to="/contact">
               Contact
+            </Link>
+            <Link
+              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
+              to="/login">
+              Login
             </Link>
           </div>
         </div>
