@@ -1,10 +1,12 @@
-import { FaBell } from "react-icons/fa"; 
-import { AiOutlineSearch } from "react-icons/ai"; 
+import { FaBell } from "react-icons/fa";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Topbar = () => {
   return (
-    <div className="shadow-md fixed w-full h-16 flex justify-between items-center px-4 z-50">
-      <div className="text-xl font-semibold">Decors Admin</div>
+    <div className="bg-white shadow-md fixed w-full h-16 flex justify-between items-center px-4 z-50 border-b border-warmGray-200">
+      <div className="text-xl font-semibold text-craft-700">
+        Craftopia Admin
+      </div>
       <div className="flex space-x-4 items-center">
         <div className="relative">
           <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
@@ -23,7 +25,7 @@ const Topbar = () => {
         </button>
 
         <img
-          src="/avatar.png" 
+          src="/avatar.png"
           alt="Profile"
           className="w-10 h-10 rounded-full object-cover"
         />

@@ -1,26 +1,25 @@
 import { Outlet } from "react-router-dom";
 import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
 
 const DashLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Topbar */}
+    <div className="min-h-screen bg-warmGray-50">
+      {/* Topbar - Fixed */}
       <Topbar />
 
-      <div className="flex flex-1">
-        {/* Sidebar */}
+      {/* Main layout container */}
+      <div className="flex pt-16">
+        {/* Sidebar - Fixed */}
         <Sidebar />
 
-        {/* Main content area */}
-        <div className="flex-1 ml-64 mt-16 p-4">
-          <Outlet />
+        {/* Main content area - Scrollable with proper margins */}
+        <div className="flex-1 ml-64 min-h-screen overflow-x-hidden">
+          <div className="max-w-full">
+            <Outlet />
+          </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };
