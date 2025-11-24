@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import {
   Button,
-  ProductCard,
   Card,
   CardHeader,
   CardTitle,
@@ -93,7 +92,12 @@ const categories = [
     icon: "mdi:image-frame",
     count: craftData.filter((c) => c.category === "wall-art").length,
   },
-  { id: "lighting", name: "Lighting & Lamps", icon: "mdi:lightbulb-on", count: 2 },
+  {
+    id: "lighting",
+    name: "Lighting & Lamps",
+    icon: "mdi:lightbulb-on",
+    count: 2,
+  },
   {
     id: "textiles",
     name: "Rugs & Textiles",

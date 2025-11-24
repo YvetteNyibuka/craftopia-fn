@@ -65,7 +65,10 @@ const AboutUsPage = () => {
   ];
 
   return (
-    <div id="about" className="min-h-screen bg-gradient-to-b from-warmGray-50 to-white">
+    <div
+      id="about"
+      className="min-h-screen bg-gradient-to-b from-warmGray-50 to-white"
+    >
       {/* Hero Section with Parallax Effect */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div
@@ -139,7 +142,10 @@ const AboutUsPage = () => {
                 className="group p-8 text-center hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
               >
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                  <Icon icon={value.icon} className="w-12 h-12 text-craft-500" />
+                  <Icon
+                    icon={value.icon}
+                    className="w-12 h-12 text-craft-500"
+                  />
                 </div>
                 <h3 className="text-xl font-semibold text-warmGray-800 mb-3">
                   {value.title}

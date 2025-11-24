@@ -134,7 +134,12 @@ const SignupPage = () => {
                       value={formData.firstName}
                       onChange={handleChange}
                       errorMessage={errors.firstName}
-                      leftIcon={<Icon icon="mdi:account" className="w-5 h-5 text-craft-500" />}
+                      leftIcon={
+                        <Icon
+                          icon="mdi:account"
+                          className="w-5 h-5 text-craft-500"
+                        />
+                      }
                     />
 
                     <Input
@@ -148,7 +153,12 @@ const SignupPage = () => {
                       value={formData.lastName}
                       onChange={handleChange}
                       errorMessage={errors.lastName}
-                      leftIcon={<Icon icon="mdi:account" className="w-5 h-5 text-craft-500" />}
+                      leftIcon={
+                        <Icon
+                          icon="mdi:account"
+                          className="w-5 h-5 text-craft-500"
+                        />
+                      }
                     />
                   </div>
 
