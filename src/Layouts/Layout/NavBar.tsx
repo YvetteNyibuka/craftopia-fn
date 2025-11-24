@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Icon } from "@iconify/react";
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,30 +20,34 @@ const NavBar: React.FC = () => {
           </div>
           {/* Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link
-              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
-              to="/"
+            <a
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 cursor-pointer flex items-center gap-2"
+              href="/#hero"
             >
+              <Icon icon="mdi:home" className="w-4 h-4" />
               Home
-            </Link>
+            </a>
             <Link
-              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 flex items-center gap-2"
               to="/craft"
             >
+              <Icon icon="mdi:store" className="w-4 h-4" />
               Shop
             </Link>
-            <Link
-              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
-              to="/about"
+            <a
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 cursor-pointer flex items-center gap-2"
+              href="/#about"
             >
+              <Icon icon="mdi:information" className="w-4 h-4" />
               About
-            </Link>
-            <Link
-              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
-              to="/contact"
+            </a>
+            <a
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 cursor-pointer flex items-center gap-2"
+              href="/#contact"
             >
+              <Icon icon="mdi:email" className="w-4 h-4" />
               Contact
-            </Link>
+            </a>
             <Link
               className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300"
               to="/showcase"
@@ -78,34 +83,39 @@ const NavBar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden bg-[#C39B7E]">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
-              to="/"
+            <a
+              className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium flex items-center gap-2"
+              href="/#hero"
             >
+              <Icon icon="mdi:home" className="w-4 h-4" />
               Home
-            </Link>
+            </a>
             <Link
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
-              to="/shop"
+              className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium flex items-center gap-2"
+              to="/craft"
             >
+              <Icon icon="mdi:store" className="w-4 h-4" />
               Shop
             </Link>
-            <Link
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
-              to="/about"
+            <a
+              className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium flex items-center gap-2"
+              href="/#about"
             >
+              <Icon icon="mdi:information" className="w-4 h-4" />
               About
-            </Link>
-            <Link
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
-              to="/contact"
+            </a>
+            <a
+              className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium flex items-center gap-2"
+              href="/#contact"
             >
+              <Icon icon="mdi:email" className="w-4 h-4" />
               Contact
-            </Link>
+            </a>
             <Link
-              className="block text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium"
+              className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-lg font-medium flex items-center gap-2"
               to="/login"
             >
+              <Icon icon="mdi:account" className="w-4 h-4" />
               Login
             </Link>
           </div>

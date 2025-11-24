@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button, Input, Card, CardContent } from "../ui";
+import { Icon } from "@iconify/react";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -133,7 +134,7 @@ const SignupPage = () => {
                       value={formData.firstName}
                       onChange={handleChange}
                       errorMessage={errors.firstName}
-                      leftIcon={<span className="text-craft-500">👤</span>}
+                      leftIcon={<Icon icon="mdi:account" className="w-5 h-5 text-craft-500" />}
                     />
 
                     <Input
@@ -147,7 +148,7 @@ const SignupPage = () => {
                       value={formData.lastName}
                       onChange={handleChange}
                       errorMessage={errors.lastName}
-                      leftIcon={<span className="text-craft-500">👤</span>}
+                      leftIcon={<Icon icon="mdi:account" className="w-5 h-5 text-craft-500" />}
                     />
                   </div>
 

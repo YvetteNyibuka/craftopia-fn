@@ -34,7 +34,6 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/dashboard" element={<DashLayout />}>
           <Route index element={<DashboardContent />} />
           <Route path="decors" element={<ManageDecors />} />
-          <Route path="categories" element={<ManageDecors />} />
           <Route path="orders" element={<Orders />} />
           <Route path="users" element={<Users />} />
           <Route path="analytics" element={<Analytics />} />

@@ -1,6 +1,7 @@
 import { Card } from "../ui/Card";
 import { Button } from "../ui/Button";
 import { useState, useEffect } from "react";
+import { Icon } from "@iconify/react";
 
 const AboutUsPage = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,22 +12,22 @@ const AboutUsPage = () => {
 
   const values = [
     {
-      icon: "🌱",
+      icon: "mdi:leaf",
       title: "Sustainable",
       description: "Eco-friendly materials and practices in every creation",
     },
     {
-      icon: "✋",
+      icon: "mdi:hand-heart",
       title: "Handcrafted",
       description: "Each piece lovingly made by skilled artisan hands",
     },
     {
-      icon: "🌍",
+      icon: "mdi:earth",
       title: "Global Impact",
       description: "Supporting communities and artisans worldwide",
     },
     {
-      icon: "💎",
+      icon: "mdi:diamond-stone",
       title: "Quality First",
       description: "Premium materials and timeless design principles",
     },
@@ -64,7 +65,7 @@ const AboutUsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-warmGray-50 to-white">
+    <div id="about" className="min-h-screen bg-gradient-to-b from-warmGray-50 to-white">
       {/* Hero Section with Parallax Effect */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div
@@ -137,8 +138,8 @@ const AboutUsPage = () => {
                 variant="elegant"
                 className="group p-8 text-center hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
               >
-                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {value.icon}
+                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                  <Icon icon={value.icon} className="w-12 h-12 text-craft-500" />
                 </div>
                 <h3 className="text-xl font-semibold text-warmGray-800 mb-3">
                   {value.title}

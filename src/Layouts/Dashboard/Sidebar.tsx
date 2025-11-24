@@ -16,11 +16,6 @@ const Sidebar = () => {
       icon: "mdi:flower-tulip",
     },
     {
-      name: "Categories",
-      path: "/dashboard/categories",
-      icon: "mdi:tag-multiple",
-    },
-    {
       name: "Orders",
       path: "/dashboard/orders",
       icon: "mdi:truck-delivery",

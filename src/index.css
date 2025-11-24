@@ -6,6 +6,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
 /* CSS Custom Properties for Design Tokens */
 :root {
   /* Colors */

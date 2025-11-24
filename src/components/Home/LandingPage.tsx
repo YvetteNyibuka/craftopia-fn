@@ -36,7 +36,7 @@ const LandingPage = () => {
   }));
 
   return (
-    <div className="min-h-screen w-full relative overflow-hidden">
+    <div id="hero" className="min-h-screen w-full relative overflow-hidden">
       {/* Dynamic Background with Parallax Effect */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-[2000ms] ease-out transform scale-105"

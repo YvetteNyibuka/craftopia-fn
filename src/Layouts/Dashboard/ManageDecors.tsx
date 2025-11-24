@@ -12,6 +12,7 @@ interface Decor {
   stock: number;
   status: string;
   image: string;
+  images?: string[]; // Additional images for gallery
   featured: boolean;
   sku: string;
   createdAt: string;
@@ -35,6 +36,9 @@ const ManageDecors = () => {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  // @ts-ignore
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const itemsPerPage = 10;
 
   const categories = [
@@ -91,6 +95,7 @@ const ManageDecors = () => {
       stock: 15,
       status: "Active",
       image: "/craft1.jpg",
+      images: ["/craft1.jpg", "/craft2.jpg", "/craft3.jpg"],
       featured: true,
       sku: "HBS-001",
       createdAt: "2024-10-15",
@@ -103,6 +108,7 @@ const ManageDecors = () => {
       stock: 8,
       status: "Active",
       image: "/craft2.jpg",
+      images: ["/craft2.jpg", "/craft4.jpg"],
       featured: false,
       sku: "CVC-002",
       createdAt: "2024-10-20",
@@ -115,6 +121,7 @@ const ManageDecors = () => {
       stock: 5,
       status: "Active",
       image: "/craft3.jpg",
+      images: ["/craft3.jpg", "/craft5.jpg", "/craft6.jpg", "/craft7.jpg"],
       featured: true,
       sku: "WWA-003",
       createdAt: "2024-10-25",
@@ -127,6 +134,7 @@ const ManageDecors = () => {
       stock: 0,
       status: "Out of Stock",
       image: "/craft4.jpg",
+      images: ["/craft4.jpg"],
       featured: false,
       sku: "MPH-004",
       createdAt: "2024-11-01",
@@ -139,6 +147,7 @@ const ManageDecors = () => {
       stock: 12,
       status: "Active",
       image: "/craft5.jpg",
+      images: ["/craft5.jpg", "/craft8.jpg"],
       featured: false,
       sku: "RTL-005",
       createdAt: "2024-11-05",
@@ -151,6 +160,7 @@ const ManageDecors = () => {
       stock: 25,
       status: "Active",
       image: "/craft6.jpg",
+      images: ["/craft6.jpg", "/craft9.jpg", "/craft10.jpg"],
       featured: true,
       sku: "BTP-006",
       createdAt: "2024-11-06",
@@ -163,6 +173,7 @@ const ManageDecors = () => {
       stock: 18,
       status: "Active",
       image: "/craft7.jpg",
+      images: ["/craft7.jpg"],
       featured: false,
       sku: "CPS-007",
       createdAt: "2024-11-07",
@@ -213,6 +224,34 @@ const ManageDecors = () => {
     setSearchQuery("");
   };
 
+  const handleImageSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const fileArray = Array.from(files);
+      setSelectedImages((prev) => [...prev, ...fileArray]);
+
+      // Create preview URLs
+      fileArray.forEach((file) => {
+        const url = URL.createObjectURL(file);
+        setImagePreviewUrls((prev) => [...prev, url]);
+      });
+    }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setSelectedImages((prev) => prev.filter((_, i) => i !== index));
+    setImagePreviewUrls((prev) => {
+      URL.revokeObjectURL(prev[index]); // Clean up memory
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const clearImageSelection = () => {
+    imagePreviewUrls.forEach((url) => URL.revokeObjectURL(url));
+    setSelectedImages([]);
+    setImagePreviewUrls([]);
+  };
+
   // Modal components
   const CreateModal = () => (
     <div
@@ -236,9 +275,9 @@ const ManageDecors = () => {
         <form className="space-y-4">
           {activeTab === "decors" ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-4">
                 <Input placeholder="Product Name" />
-                <Input placeholder="SKU" />
+                {/* <Input placeholder="SKU" /> */}
                 <Input placeholder="Price" type="number" />
                 <Input placeholder="Stock Quantity" type="number" />
                 <select className="px-3 py-2 border border-warmGray-300 rounded-lg focus:ring-2 focus:ring-craft-500 focus:border-craft-500">
@@ -260,19 +299,63 @@ const ManageDecors = () => {
                 rows={3}
                 placeholder="Product Description"
               ></textarea>
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <input type="checkbox" id="featured" className="rounded" />
                 <label htmlFor="featured">Featured Product</label>
-              </div>
+              </div> */}
               <div>
                 <label className="block text-sm font-medium text-warmGray-700 mb-2">
-                  Product Image
+                  Product Images
                 </label>
                 <input
                   type="file"
                   accept="image/*"
+                  multiple
+                  onChange={handleImageSelection}
                   className="w-full px-3 py-2 border border-warmGray-300 rounded-lg"
                 />
+                <p className="text-xs text-warmGray-500 mt-1">
+                  Select multiple images for the product gallery. The first
+                  image will be the main image.
+                </p>
+
+                {/* Image Previews */}
+                {imagePreviewUrls.length > 0 && (
+                  <div className="mt-4">
+                    <div className="flex flex-wrap gap-2">
+                      {imagePreviewUrls.map((url, index) => (
+                        <div key={index} className="relative group">
+                          <img
+                            src={url}
+                            alt={`Preview ${index + 1}`}
+                            className="w-20 h-20 object-cover rounded-lg border border-warmGray-200"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage(index)}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            ×
+                          </button>
+                          {index === 0 && (
+                            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs text-center py-1 rounded-b-lg">
+                              Main
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearImageSelection}
+                      className="mt-2 text-red-600 hover:text-red-700"
+                    >
+                      Clear All Images
+                    </Button>
+                  </div>
+                )}
               </div>
             </>
           ) : (
@@ -283,7 +366,7 @@ const ManageDecors = () => {
                 rows={2}
                 placeholder="Category Description"
               ></textarea>
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-warmGray-700 mb-2">
                   Category Image
                 </label>
@@ -292,7 +375,7 @@ const ManageDecors = () => {
                   accept="image/*"
                   className="w-full px-3 py-2 border border-warmGray-300 rounded-lg"
                 />
-              </div>
+              </div> */}
             </>
           )}
         </form>
@@ -332,15 +415,15 @@ const ManageDecors = () => {
           <form className="space-y-4">
             {activeTab === "decors" ? (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-4">
                   <Input
                     placeholder="Product Name"
                     defaultValue={(selectedItem as Decor).name}
                   />
-                  <Input
+                  {/* <Input
                     placeholder="SKU"
                     defaultValue={(selectedItem as Decor).sku}
-                  />
+                  /> */}
                   <Input
                     placeholder="Price"
                     type="number"
@@ -371,7 +454,7 @@ const ManageDecors = () => {
                     <option value="Archived">Archived</option>
                   </select>
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     id="editFeatured"
@@ -379,16 +462,73 @@ const ManageDecors = () => {
                     defaultChecked={(selectedItem as Decor).featured}
                   />
                   <label htmlFor="editFeatured">Featured Product</label>
-                </div>
+                </div> */}
                 <div>
                   <label className="block text-sm font-medium text-warmGray-700 mb-2">
-                    Product Image
+                    Product Images
                   </label>
+                  {/* Show current images if any */}
+                  {selectedItem && (selectedItem as Decor).images && (
+                    <div className="mb-4">
+                      <p className="text-sm text-warmGray-600 mb-2">
+                        Current images:
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {(selectedItem as Decor).images!.map((img, index) => (
+                          <div key={index} className="relative">
+                            <img
+                              src={img}
+                              alt={`Current ${index + 1}`}
+                              className="w-20 h-20 object-cover rounded-lg border border-warmGray-200"
+                            />
+                            {index === 0 && (
+                              <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs text-center py-1 rounded-b-lg">
+                                Main
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <input
                     type="file"
                     accept="image/*"
+                    multiple
+                    onChange={handleImageSelection}
                     className="w-full px-3 py-2 border border-warmGray-300 rounded-lg"
                   />
+                  <p className="text-xs text-warmGray-500 mt-1">
+                    Select new images to add to the gallery. Leave empty to keep
+                    current images.
+                  </p>
+
+                  {/* New image previews */}
+                  {imagePreviewUrls.length > 0 && (
+                    <div className="mt-4">
+                      <p className="text-sm text-warmGray-600 mb-2">
+                        New images to add:
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {imagePreviewUrls.map((url, index) => (
+                          <div key={index} className="relative group">
+                            <img
+                              src={url}
+                              alt={`Preview ${index + 1}`}
+                              className="w-20 h-20 object-cover rounded-lg border border-warmGray-200"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(index)}
+                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
@@ -403,7 +543,7 @@ const ManageDecors = () => {
                   placeholder="Category Description"
                   defaultValue={(selectedItem as Category).description}
                 ></textarea>
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium text-warmGray-700 mb-2">
                     Category Image
                   </label>
@@ -412,7 +552,7 @@ const ManageDecors = () => {
                     accept="image/*"
                     className="w-full px-3 py-2 border border-warmGray-300 rounded-lg"
                   />
-                </div>
+                </div> */}
               </>
             )}
           </form>
