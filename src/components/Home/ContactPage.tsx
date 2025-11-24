@@ -63,7 +63,10 @@ const ContactPage = () => {
   }
 
   return (
-    <div id="contact" className="min-h-screen bg-gradient-to-br from-warmGray-50 to-craft-50">
+    <div
+      id="contact"
+      className="min-h-screen bg-gradient-to-br from-warmGray-50 to-craft-50"
+    >
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Header - Simple and Humble */}
         <div className="text-center mb-12">
@@ -396,8 +399,8 @@ const ContactPage = () => {
                   <h4 className="font-semibold text-warmGray-800">Shipping?</h4>
                 </div>
                 <p className="text-sm text-warmGray-600">
-                  Free shipping in Kigali. Nationwide and international rates calculated at
-                  checkout.
+                  Free shipping in Kigali. Nationwide and international rates
+                  calculated at checkout.
                 </p>
               </div>
 
@@ -410,7 +413,8 @@ const ContactPage = () => {
                   <h4 className="font-semibold text-warmGray-800">How Long?</h4>
                 </div>
                 <p className="text-sm text-warmGray-600">
-                  Ready-made items ship in 1-2 hours. Custom pieces take 1-3 days.
+                  Ready-made items ship in 1-2 hours. Custom pieces take 1-3
+                  days.
                 </p>
               </div>
             </div>
