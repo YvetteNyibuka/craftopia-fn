@@ -107,12 +107,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
         <div
           className={cn(
-            "flex items-center justify-center gap-2",
+            "flex flex-row items-center justify-center gap-2 w-full",
             loading && "opacity-0"
           )}
         >
           {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
-          <span>{children}</span>
+          {typeof children === "string" || typeof children === "number" ? (
+            <span className="whitespace-nowrap">{children}</span>
+          ) : (
+            <div className="flex flex-row items-center gap-2 justify-center w-full">
+              {children}
+            </div>
+          )}
           {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
         </div>
 
