@@ -159,7 +159,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
+    const inputId = React.useMemo(
+      () => {
+        if (id) return id;
+        // Use a static counter instead of Date.now() to ensure stable IDs
+        return `input-${
+          props.placeholder?.replace(/\s+/g, "-").toLowerCase() || "field"
+        }-${Math.random().toString(36).substr(2, 9)}`;
+      },
+      [id, props.placeholder] // Only depend on id and placeholder which should be stable
+    );
     const finalState = errorMessage ? "error" : state;
 
     return (
@@ -233,8 +242,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     },
     ref
   ) => {
-    const textareaId =
-      id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
+    const textareaId = React.useMemo(() => {
+      if (id) return id;
+      return `textarea-${
+        props.placeholder?.replace(/\s+/g, "-").toLowerCase() || "field"
+      }-${Math.random().toString(36).substr(2, 9)}`;
+    }, [id, props.placeholder]);
     const finalState = errorMessage ? "error" : state;
 
     return (
@@ -294,7 +307,12 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref
   ) => {
-    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    const selectId = React.useMemo(() => {
+      if (id) return id;
+      return `select-${
+        placeholder?.replace(/\\s+/g, "-").toLowerCase() || "field"
+      }-${Math.random().toString(36).substr(2, 9)}`;
+    }, [id, placeholder]);
     const finalState = errorMessage ? "error" : state;
 
     return (

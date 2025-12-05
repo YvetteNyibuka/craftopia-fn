@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button, Input, Card, CardContent } from "../ui";
 import { Icon } from "@iconify/react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ const SignupPage = () => {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,6 +27,8 @@ const SignupPage = () => {
     if (!formData.lastName) newErrors.lastName = "Last name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
+    if (formData.password.length < 6)
+      newErrors.password = "Password must be at least 6 characters";
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
@@ -32,11 +37,19 @@ const SignupPage = () => {
 
     if (Object.keys(newErrors).length === 0) {
       setLoading(true);
-      // Simulate API call
-      setTimeout(() => {
+      try {
+        await register(formData);
+        navigate("/login"); // Redirect to login after successful registration
+      } catch (err) {
+        setErrors({
+          general:
+            err instanceof Error
+              ? err.message
+              : "Registration failed. Please try again.",
+        });
+      } finally {
         setLoading(false);
-        alert("Account created successfully!");
-      }, 2000);
+      }
     }
   };
 
@@ -120,6 +133,12 @@ const SignupPage = () => {
                     Start your journey with handcrafted excellence
                   </p>
                 </div>
+
+                {errors.general && (
+                  <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-600 text-sm">{errors.general}</p>
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
