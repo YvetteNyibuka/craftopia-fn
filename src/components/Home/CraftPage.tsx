@@ -63,14 +63,22 @@ const CraftPage = () => {
     setCurrentImageIndex(0);
   };
 
-  const formatPrice = (price: number, discountPrice?: number) => {
-    if (discountPrice && discountPrice < price) {
+  const formatPrice = (price: number, originalPrice?: number) => {
+    if (originalPrice && originalPrice > price) {
+      const discountPercentage = Math.round(
+        ((originalPrice - price) / originalPrice) * 100
+      );
       return (
-        <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-craft-600">
-            ${discountPrice}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <span className="text-lg font-bold text-craft-600">${price}</span>
+            <span className="text-sm text-gray-500 line-through">
+              ${originalPrice}
+            </span>
+          </div>
+          <span className="text-xs text-green-600 font-medium">
+            Save {discountPercentage}%
           </span>
-          <span className="text-sm text-gray-500 line-through">${price}</span>
         </div>
       );
     }
@@ -237,10 +245,15 @@ const CraftPage = () => {
 
                       {/* Minimal Badges */}
                       <div className="absolute top-4 left-4 flex flex-col gap-2">
-                        {item.discountPrice &&
-                          item.discountPrice < item.price && (
+                        {item.originalPrice &&
+                          item.originalPrice > item.price && (
                             <span className="px-3 py-1 bg-red-500 text-white text-xs font-medium rounded-full shadow-sm">
-                              Sale
+                              {Math.round(
+                                ((item.originalPrice - item.price) /
+                                  item.originalPrice) *
+                                  100
+                              )}
+                              % OFF
                             </span>
                           )}
                         {item.stock === 0 && (
@@ -271,7 +284,7 @@ const CraftPage = () => {
                       </h3>
 
                       <div className="flex items-center justify-between mb-4">
-                        {formatPrice(item.price, item.discountPrice)}
+                        {formatPrice(item.price, item.originalPrice)}
                         {item.featured && (
                           <Icon
                             icon="mdi:star"
@@ -388,7 +401,7 @@ const CraftPage = () => {
                         <div>
                           {formatPrice(
                             selectedItem.price,
-                            selectedItem.discountPrice
+                            selectedItem.originalPrice
                           )}
                         </div>
                         {selectedItem.featured && (
@@ -506,6 +519,25 @@ const CraftPage = () => {
                             : "Out of stock"}
                         </span>
                       </div>
+                      {selectedItem.originalPrice &&
+                        selectedItem.originalPrice > selectedItem.price && (
+                          <div>
+                            <span className="block text-sm font-medium text-warmGray-500 mb-1">
+                              You Save
+                            </span>
+                            <span className="font-medium text-green-600">
+                              ${selectedItem.originalPrice - selectedItem.price}{" "}
+                              (
+                              {Math.round(
+                                ((selectedItem.originalPrice -
+                                  selectedItem.price) /
+                                  selectedItem.originalPrice) *
+                                  100
+                              )}
+                              %)
+                            </span>
+                          </div>
+                        )}
                       <div>
                         <span className="block text-sm font-medium text-warmGray-500 mb-1">
                           Status

@@ -2,6 +2,7 @@ import { FaBell, FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 
 interface TopbarProps {
   toggleSidebar: () => void;
@@ -10,11 +11,31 @@ interface TopbarProps {
 const Topbar = ({ toggleSidebar }: TopbarProps) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
+    setIsDropdownOpen(false);
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="bg-white shadow-md fixed w-full h-16 flex justify-between items-center px-4 z-50 border-b border-warmGray-200">
@@ -52,13 +73,22 @@ const Topbar = ({ toggleSidebar }: TopbarProps) => {
         </button>
 
         {/* User avatar and logout */}
-        <div className="relative group">
-          <div className="w-8 h-8 lg:w-10 lg:h-10 bg-craft-600 rounded-full flex items-center justify-center text-white font-medium cursor-pointer">
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="w-8 h-8 lg:w-10 lg:h-10 bg-craft-600 rounded-full flex items-center justify-center text-white font-medium cursor-pointer hover:bg-craft-700 transition-colors"
+          >
             {user?.firstName?.[0]?.toUpperCase() || "A"}
-          </div>
+          </button>
 
           {/* Dropdown menu */}
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-50">
+          <div
+            className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 transition-all duration-200 z-50 ${
+              isDropdownOpen
+                ? "opacity-100 transform scale-100"
+                : "opacity-0 transform scale-95 pointer-events-none"
+            }`}
+          >
             <div className="px-4 py-2 border-b border-gray-200">
               <p className="text-sm font-medium text-gray-900">
                 {user?.firstName} {user?.lastName}

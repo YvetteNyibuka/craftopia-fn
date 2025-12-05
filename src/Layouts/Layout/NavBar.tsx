@@ -14,6 +14,14 @@ const NavBar: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setIsOpen(false);
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -63,34 +71,31 @@ const NavBar: React.FC = () => {
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-6">
-            <a
+            <button
               className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 cursor-pointer flex items-center gap-2"
-              href="/#hero"
+              onClick={() => scrollToSection("landing")}
             >
-              <Icon icon="mdi:home" className="w-4 h-4" />
               Home
-            </a>
-            <Link
+            </button>
+
+            <button
               className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 flex items-center gap-2"
-              to="/craft"
+              onClick={() => scrollToSection("about")}
             >
-              <Icon icon="mdi:store" className="w-4 h-4" />
-              Shop
-            </Link>
-            <a
-              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 cursor-pointer flex items-center gap-2"
-              href="/#about"
+              About Us
+            </button>
+            <button
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 flex items-center gap-2"
+              onClick={() => scrollToSection("crafts")}
             >
-              <Icon icon="mdi:information" className="w-4 h-4" />
-              About
-            </a>
-            <a
-              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 cursor-pointer flex items-center gap-2"
-              href="/#contact"
+              Crafts
+            </button>
+            <button
+              className="hover:text-[#C39B7E] px-3 py-2 rounded-md text-lg font-medium transition-colors duration-300 flex items-center gap-2"
+              onClick={() => scrollToSection("contact")}
             >
-              <Icon icon="mdi:email" className="w-4 h-4" />
-              Contact
-            </a>
+              Contact Us
+            </button>
 
             {/* Authentication Section */}
             {!isAuthenticated ? (
@@ -199,38 +204,34 @@ const NavBar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
           <div className="px-4 pt-2 pb-3 space-y-1">
-            <a
-              className="text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
-              href="/#hero"
-              onClick={handleLinkClick}
+            <button
+              className="w-full text-left text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
+              onClick={() => scrollToSection("landing")}
             >
               <Icon icon="mdi:home" className="w-5 h-5" />
               Home
-            </a>
-            <Link
-              className="text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
-              to="/craft"
-              onClick={handleLinkClick}
-            >
-              <Icon icon="mdi:store" className="w-5 h-5" />
-              Shop
-            </Link>
-            <a
-              className="text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
-              href="/#about"
-              onClick={handleLinkClick}
+            </button>
+            <button
+              className="w-full text-left text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
+              onClick={() => scrollToSection("about")}
             >
               <Icon icon="mdi:information" className="w-5 h-5" />
-              About
-            </a>
-            <a
-              className="text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
-              href="/#contact"
-              onClick={handleLinkClick}
+              About Us
+            </button>
+            <button
+              className="w-full text-left text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
+              onClick={() => scrollToSection("crafts")}
+            >
+              <Icon icon="mdi:store" className="w-5 h-5" />
+              Crafts
+            </button>
+            <button
+              className="w-full text-left text-gray-700 hover:text-[#C39B7E] hover:bg-gray-50 px-3 py-3 rounded-md text-base font-medium flex items-center gap-3"
+              onClick={() => scrollToSection("contact")}
             >
               <Icon icon="mdi:email" className="w-5 h-5" />
-              Contact
-            </a>
+              Contact Us
+            </button>
 
             {/* Mobile Auth Section */}
             {!isAuthenticated ? (

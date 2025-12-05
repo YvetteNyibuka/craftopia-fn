@@ -7,11 +7,18 @@ import ContactPage from "./ContactPage";
 const Home: React.FC = () => {
   return (
     <div className="flex flex-col font-sans">
-      <LandingPage />
-      <AboutUsPage />
-      <CraftPage />
-      <ContactPage />
-      
+      <div id="landing">
+        <LandingPage />
+      </div>
+      <div id="about">
+        <AboutUsPage />
+      </div>
+      <div id="crafts">
+        <CraftPage />
+      </div>
+      <div id="contact">
+        <ContactPage />
+      </div>
     </div>
   );
 };

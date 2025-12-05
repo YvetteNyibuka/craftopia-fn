@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://craftopia-bn.vercel.app/api";
 
 // Types for API responses
 export interface User {
@@ -34,7 +34,7 @@ export interface Decor {
     description?: string;
   };
   price: number;
-  discountPrice?: number;
+  originalPrice?: number;
   images: string[];
   status: "active" | "inactive" | "out_of_stock";
   stock: number;
@@ -51,6 +51,11 @@ export interface Decor {
   createdBy?: string;
   createdAt: string;
   updatedAt: string;
+  // Virtual fields from backend
+  id: string;
+  discountPercentage: number;
+  isOnSale: boolean;
+  isInStock: boolean;
 }
 
 export interface AuthResponse {

@@ -11,7 +11,7 @@ interface DecorFormData {
   description: string;
   category: string;
   price: number;
-  discountPrice?: number;
+  originalPrice?: number;
   images: File[]; // Changed from string[] to File[] for form handling
   status: "active" | "inactive" | "out_of_stock";
   stock: number;
@@ -53,7 +53,7 @@ const ManageDecorsFixed = () => {
         description: "",
         category: "",
         price: 0,
-        discountPrice: 0,
+        originalPrice: 0,
         images: [] as File[],
         status: "active",
         stock: 0,
@@ -181,10 +181,10 @@ const ManageDecorsFixed = () => {
           formDataObj.append("materials", JSON.stringify(decorData.materials));
           formDataObj.append("featured", decorData.featured ? "true" : "false");
 
-          if (decorData.discountPrice) {
+          if (decorData.originalPrice) {
             formDataObj.append(
-              "discountPrice",
-              decorData.discountPrice.toString()
+              "originalPrice",
+              decorData.originalPrice.toString()
             );
           }
           if (decorData.tags?.length) {
@@ -204,7 +204,7 @@ const ManageDecorsFixed = () => {
             description: decorData.description,
             category: decorData.category,
             price: decorData.price,
-            discountPrice: decorData.discountPrice,
+            originalPrice: decorData.originalPrice,
             stock: decorData.stock,
             status: decorData.status,
             materials: decorData.materials,
@@ -234,12 +234,13 @@ const ManageDecorsFixed = () => {
       if (activeTab === "decors") {
         const decorData = formData as DecorFormData;
         // For updates, we'll send JSON data (file uploads not supported for updates yet)
-        const updateData = {
+        const updateData: Partial<Decor> = {
           name: decorData.name,
           description: decorData.description,
-          category: decorData.category,
+          // Send category as string ID for the API, but type it properly
+          category: decorData.category as any,
           price: decorData.price,
-          discountPrice: decorData.discountPrice,
+          originalPrice: decorData.originalPrice,
           stock: decorData.stock,
           status: decorData.status,
           materials: decorData.materials,
@@ -313,9 +314,12 @@ const ManageDecorsFixed = () => {
         setFormData({
           name: decor.name,
           description: decor.description,
-          category: decor.category,
+          category:
+            typeof decor.category === "string"
+              ? decor.category
+              : decor.category._id,
           price: decor.price,
-          discountPrice: decor.discountPrice,
+          originalPrice: decor.originalPrice,
           stock: decor.stock,
           status: decor.status,
           tags: decor.tags || [],
@@ -577,11 +581,11 @@ const ManageDecorsFixed = () => {
                     }
                   />
                   <Input
-                    placeholder="Original Price (optional)"
+                    placeholder="Original Price (before discount, optional)"
                     type="number"
-                    value={(formData as DecorFormData).discountPrice || ""}
+                    value={(formData as DecorFormData).originalPrice || ""}
                     onChange={(e) =>
-                      handleFormChange("discountPrice", Number(e.target.value))
+                      handleFormChange("originalPrice", Number(e.target.value))
                     }
                   />
                   <Input
@@ -879,11 +883,11 @@ const ManageDecorsFixed = () => {
                     }
                   />
                   <Input
-                    placeholder="Original Price (optional)"
+                    placeholder="Original Price (before discount, optional)"
                     type="number"
-                    value={(formData as DecorFormData).discountPrice || ""}
+                    value={(formData as DecorFormData).originalPrice || ""}
                     onChange={(e) =>
-                      handleFormChange("discountPrice", Number(e.target.value))
+                      handleFormChange("originalPrice", Number(e.target.value))
                     }
                   />
                   <Input

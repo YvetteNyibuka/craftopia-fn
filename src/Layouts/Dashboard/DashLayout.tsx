@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import Topbar from "./Topbar";
 import Sidebar from "./Sidebar";
-import ManageDecorsFixed from "./ManageDecorsFixed"; // Import the fixed version
 
 const DashLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
